@@ -8,8 +8,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 // import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.aton;
 import frc.robot.subsystem.RomiDrivetrain;
 import frc.robot.subsystem.atonSub;
 
@@ -20,10 +21,7 @@ import frc.robot.subsystem.atonSub;
  * project.
  */
 public class Robot extends TimedRobot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final XboxController controller = new XboxController(0);
   private RomiDrivetrain driveTrain = new RomiDrivetrain();
 
@@ -32,18 +30,18 @@ public class Robot extends TimedRobot {
   private double rot = 0.0;
   private double speed = 0.0;
 
-  // private Command driverThing;
+  
   private Command aton;
+  private Command m_autonomousCommand;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
-    
+    m_chooser.setDefaultOption("Simple Auto", aton);  
+    m_chooser.addOption("Complex Auto", aton);
+    m_autonomousCommand = m_chooser.getSelected();
   }
 
   /**
@@ -54,7 +52,9 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -68,31 +68,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
     
     driveTrain.resetEncoders();
     // stage = 1;
     // timer.reset();
     // timer.start();
     atonSub.startTimer();
-    aton.schedule();
+    // aton.schedule();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        
-        break;
-    }
 
     // if (timer.get() < 1.5 & stage == 1) {
     //   RomiDrivetrain.arcadeDrive(0.7, 0.0); // drive forwards half speed
@@ -112,7 +99,9 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
   }
 
   /** This function is called periodically during operator control. */
