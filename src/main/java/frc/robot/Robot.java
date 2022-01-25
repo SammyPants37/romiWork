@@ -5,11 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
+// import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystem.RomiDrivetrain;
+import frc.robot.subsystem.atonSub;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,13 +27,13 @@ public class Robot extends TimedRobot {
   private final XboxController controller = new XboxController(0);
   private RomiDrivetrain driveTrain = new RomiDrivetrain();
 
-  private final Timer timer = new Timer();
-  private int stage = 1;
+  // private final Timer timer = new Timer();
+  // private int stage = 1;
   private double rot = 0.0;
   private double speed = 0.0;
 
   // private Command driverThing;
-  // private Command aton;
+  private Command aton;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -71,9 +73,11 @@ public class Robot extends TimedRobot {
     System.out.println("Auto selected: " + m_autoSelected);
     
     driveTrain.resetEncoders();
-    // timer.stop();
-    timer.reset();
-    timer.start();
+    // stage = 1;
+    // timer.reset();
+    // timer.start();
+    atonSub.startTimer();
+    aton.schedule();
   }
 
   /** This function is called periodically during autonomous. */
@@ -89,18 +93,19 @@ public class Robot extends TimedRobot {
         
         break;
     }
-    // System.out.println(timer.get());
-    if (timer.get() < 1.5 & stage == 1) {
-      RomiDrivetrain.arcadeDrive(0.7, 0.0); // drive forwards half speed
-    } else if (timer.get() < 1.5 & stage == 2) {
-      RomiDrivetrain.arcadeDrive(0.0, 0.4);
-    } else if (timer.get() < 1.5 & stage == 3) {
-      RomiDrivetrain.arcadeDrive(0.7, 0.0);
-    } else if (timer.get() > 1.5) {
-      // RomiDrivetrain.stop(); // stop robot
-      timer.reset();
-      stage += 1;
-    }
+
+    // if (timer.get() < 1.5 & stage == 1) {
+    //   RomiDrivetrain.arcadeDrive(0.7, 0.0); // drive forwards half speed
+    // } else if (timer.get() < 1.5 & stage == 2) {
+    //   RomiDrivetrain.arcadeDrive(0.0, 0.4);
+    // } else if (timer.get() < 1.5 & stage == 3) {
+    //   RomiDrivetrain.arcadeDrive(0.7, 0.0);
+    // } else if (timer.get() > 1.5) {
+    //   RomiDrivetrain.stop(); // stop robot
+    //   timer.reset();
+    //   stage += 1;
+    // }
+    // aton.execute();
   }
   
 
@@ -136,6 +141,11 @@ public class Robot extends TimedRobot {
       rot = 0.7;
     } else if (rot <= -0.7) {
       rot = -0.7;
+    }
+    if (speed > 0) {
+      rot += 0.05;
+    } else if (speed < 0) {
+      rot -= 0.05;
     }
     RomiDrivetrain.arcadeDrive(-speed, rot);
   }
