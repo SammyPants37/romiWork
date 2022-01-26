@@ -23,6 +23,7 @@ public class atonSub extends SubsystemBase{
     }
 
     public static void drive(double speed, double rot) {
+        System.out.println("driving!");
         RomiDrivetrain.arcadeDrive(speed, rot);
     }
 
