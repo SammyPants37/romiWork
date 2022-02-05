@@ -4,12 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.TimedRobot;
 // import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+// import edu.wpi.first.wpilibj2.command.CommandScheduler;
 // import frc.robot.commands.aton;
 import frc.robot.subsystem.RomiDrivetrain;
 import frc.robot.subsystem.atonSub;
@@ -21,9 +22,10 @@ import frc.robot.subsystem.atonSub;
  * project.
  */
 public class Robot extends TimedRobot {
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  // SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final XboxController controller = new XboxController(0);
-  private RomiDrivetrain driveTrain = new RomiDrivetrain();
+  ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+  private RomiDrivetrain driveTrain = new RomiDrivetrain(gyro);
 
   // private final Timer timer = new Timer();
   // private int stage = 1;
@@ -32,16 +34,16 @@ public class Robot extends TimedRobot {
 
   
   private Command aton;
-  private Command m_autonomousCommand;
+  // private Command m_autonomousCommand;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Simple Auto", aton);  
-    m_chooser.addOption("Complex Auto", aton);
-    m_autonomousCommand = m_chooser.getSelected();
+    // m_chooser.setDefaultOption("Simple Auto", aton);  
+    // m_chooser.addOption("Complex Auto", aton);
+    // m_autonomousCommand = m_chooser.getSelected();
   }
 
   /**
@@ -53,7 +55,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    CommandScheduler.getInstance().run();
+    // CommandScheduler.getInstance().run();
   }
 
   /**
@@ -74,7 +76,7 @@ public class Robot extends TimedRobot {
     // timer.reset();
     // timer.start();
     atonSub.startTimer();
-    // aton.schedule();
+    aton.schedule();
   }
 
   /** This function is called periodically during autonomous. */
@@ -99,9 +101,9 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.cancel();
+    // }
   }
 
   /** This function is called periodically during operator control. */
@@ -119,24 +121,7 @@ public class Robot extends TimedRobot {
     } else {
       speed = 0;
     }
-    // speed maxing
-    if (speed >= 0.7) {
-      speed = 0.7;
-    } else if (speed <= -0.7) {
-      speed = -0.7;
-    }
-    // rot maxing
-    if (rot >= 0.7) {
-      rot = 0.7;
-    } else if (rot <= -0.7) {
-      rot = -0.7;
-    }
-    if (speed > 0) {
-      rot += 0.05;
-    } else if (speed < 0) {
-      rot -= 0.05;
-    }
-    RomiDrivetrain.arcadeDrive(-speed, rot);
+    driveTrain.arcadeDrive(-speed, rot);
   }
 
   /** This function is called once when the robot is disabled. */

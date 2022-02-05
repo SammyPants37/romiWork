@@ -7,6 +7,7 @@ package frc.robot.subsystem;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class RomiDrivetrain {
   private static final double kCountsPerRevolution = 1440.0;
@@ -25,6 +26,14 @@ public class RomiDrivetrain {
   // Set up the differential drive controller
   private final static DifferentialDrive m_diffDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
 
+  int P, I, D = 1;
+  
+  int integral, previous_error, setpoint = 0;
+  private Gyro gyro;
+  private double error;
+  private double derivative;
+  private double rcw;
+
   /** Creates a new RomiDrivetrain. */
   public RomiDrivetrain() {
     // Use inches as unit for encoder distances
@@ -33,11 +42,30 @@ public class RomiDrivetrain {
     resetEncoders();
   }
 
-  public static void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
-    m_diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
+  public RomiDrivetrain(Gyro Gyro){
+    gyro = Gyro;
+    P = 1;
+    I = 0;
+    D = 0;
   }
 
-  public static void stop() {
+  public void setSetpoint(int Setpoint)  {
+      setpoint = Setpoint;
+  }
+
+  public void PID(){
+      error = setpoint - gyro.getAngle(); // Error = Target - Actual
+      integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+      derivative = (error - previous_error) / .02;
+      rcw = P*error + I*integral + D*derivative;
+    }
+
+  public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
+    PID();
+    m_diffDrive.arcadeDrive(xaxisSpeed, rcw+zaxisRotate);
+  }
+
+  public void stop() {
     m_diffDrive.arcadeDrive(0.0, 0.0);
   }
 

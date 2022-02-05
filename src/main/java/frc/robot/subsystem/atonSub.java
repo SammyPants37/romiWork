@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class atonSub extends SubsystemBase{
 
+    private static RomiDrivetrain Drive = new RomiDrivetrain();
+
     private static Timer timer = new Timer();
     public static int stage = 1;
 
@@ -24,10 +26,10 @@ public class atonSub extends SubsystemBase{
 
     public static void drive(double speed, double rot) {
         System.out.println("driving!");
-        RomiDrivetrain.arcadeDrive(speed, rot);
+        Drive.arcadeDrive(speed, rot);
     }
 
     public static void stop(){
-        RomiDrivetrain.stop();
+        Drive.stop();
     }
 }
