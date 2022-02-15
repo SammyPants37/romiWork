@@ -4,12 +4,12 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.TimedRobot;
 // import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.sensors.RomiGyro;
 // import edu.wpi.first.wpilibj2.command.CommandScheduler;
 // import frc.robot.commands.aton;
 import frc.robot.subsystem.RomiDrivetrain;
@@ -24,7 +24,7 @@ import frc.robot.subsystem.atonSub;
 public class Robot extends TimedRobot {
   // SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final XboxController controller = new XboxController(0);
-  ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+  private RomiGyro gyro = new RomiGyro();
   private RomiDrivetrain driveTrain = new RomiDrivetrain(gyro);
 
   // private final Timer timer = new Timer();

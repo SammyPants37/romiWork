@@ -2,13 +2,19 @@ package frc.robot.subsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.sensors.RomiGyro;
 
 public class atonSub extends SubsystemBase{
 
-    private static RomiDrivetrain Drive = new RomiDrivetrain();
+    static RomiGyro gyro;
+    private static RomiDrivetrain Drive = new RomiDrivetrain(gyro);
 
     private static Timer timer = new Timer();
     public static int stage = 1;
+
+    public atonSub(RomiGyro Gyro) {
+        gyro = Gyro;
+    }
 
     public static double getTime() {
         return timer.get();
