@@ -1,27 +1,15 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystem.atonSub;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.sensors.RomiGyro;
 
-public class aton extends CommandBase {
+public class aton extends SequentialCommandGroup {
     
-    private int stage = atonSub.stage;
+    private RomiGyro gyro;
 
-    public void execute() {
-        if (atonSub.getTime() < 1.5 & stage == 1) {
-            atonSub.drive(0.7, 0.0); // drive forwards half speed
-          } else if (atonSub.getTime() < 1.5 & stage == 2) {
-            atonSub.drive(0.0, 0.4);
-          } else if (atonSub.getTime() < 1.5 & stage == 3) {
-            atonSub.drive(0.7, 0.0);
-          } else if (atonSub.getTime() > 1.5) {
-            atonSub.stop();// stop robot
-            atonSub.resetTimer();
-            stage += 1;
-          }
-    }
-
-    public boolean isFinished() {
-      return stage == 4;
+    public aton(RomiGyro theGyro, double distance, double angle) {
+      addCommands(new driveDistance(distance, gyro),
+                  new turnToAnAngle(angle, gyro),
+                  new driveDistance(distance, gyro));
     }
 }

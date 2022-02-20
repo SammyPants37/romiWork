@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.aton;
 import frc.robot.sensors.RomiGyro;
 // import edu.wpi.first.wpilibj2.command.CommandScheduler;
 // import frc.robot.commands.aton;
@@ -32,8 +33,9 @@ public class Robot extends TimedRobot {
   private double rot = 0.0;
   private double speed = 0.0;
 
+  private static boolean GyroInverted = false;
   
-  private Command aton;
+  private Command aton = new aton(gyro, 15.0, 180.0);
   // private Command m_autonomousCommand;
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -56,6 +58,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     // CommandScheduler.getInstance().run();
+    
   }
 
   /**
@@ -75,7 +78,7 @@ public class Robot extends TimedRobot {
     // stage = 1;
     // timer.reset();
     // timer.start();
-    atonSub.startTimer();
+    // atonSub.startTimer();
     aton.schedule();
   }
 
@@ -122,6 +125,7 @@ public class Robot extends TimedRobot {
       speed = 0;
     }
     driveTrain.arcadeDrive(-speed, rot);
+    System.out.println(Math.IEEEremainder(gyro.getAngleZ(), 360) * (GyroInverted ? -1.0 : 1.0));
   }
 
   /** This function is called once when the robot is disabled. */

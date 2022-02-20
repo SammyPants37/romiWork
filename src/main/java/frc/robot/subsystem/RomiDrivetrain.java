@@ -37,6 +37,8 @@ public class RomiDrivetrain {
 
   public RomiDrivetrain(RomiGyro gyro){
       this.gyro = gyro;
+      I = 0;
+      D = 0;
   }
 
   public void setSetpoint(int setpoint) {
