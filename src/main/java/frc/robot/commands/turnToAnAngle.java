@@ -20,6 +20,7 @@ public class turnToAnAngle extends CommandBase{
     }
 
     public void execute() {
+        System.out.println("turning!");
         if (turnLeft == true) {
             drive.arcadeDrive(0.0, -0.7);
         } else {
@@ -28,6 +29,10 @@ public class turnToAnAngle extends CommandBase{
     }
 
     public boolean isFinished() {
-        return gyro.getAngleZ() == angle;
+        return gyro.getAngleZ() >= angle;
     }
+
+    public void end(boolean interrupted) {
+        drive.arcadeDrive(0, 0);
+      }
 }

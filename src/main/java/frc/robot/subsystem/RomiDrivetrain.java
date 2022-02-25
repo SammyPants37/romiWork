@@ -20,8 +20,8 @@ public class RomiDrivetrain {
 
   // The Romi has onboard encoders that are hardcoded
   // to use DIO pins 4/5 and 6/7 for the left and right
-  private final Encoder m_leftEncoder = new Encoder(4, 5);
-  private final Encoder m_rightEncoder = new Encoder(6, 7);
+  private final static Encoder m_leftEncoder = new Encoder(4, 5);
+  private final static Encoder m_rightEncoder = new Encoder(6, 7);
 
   // Set up the differential drive controller
   private final static DifferentialDrive m_diffDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);

@@ -17,10 +17,15 @@ public class driveDistance extends CommandBase{
     }
 
     public void execute() {
+        System.out.println("driving!");
         drive.arcadeDrive(0.7, 0.0);
     }
 
     public boolean isFinished() {
-        return drive.getLeftDistanceInch() == distance;
+        return drive.getLeftDistanceInch() >= distance;
     }
+
+    public void end(boolean interrupted) {
+        drive.arcadeDrive(0, 0);
+      }
 }
