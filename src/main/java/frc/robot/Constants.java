@@ -10,21 +10,17 @@ package frc.robot;
 public class Constants {
 
     public static final class DriveConstants {
-        public static final int LEFT_MOTOR_PORT = 0;
-        public static final int RIGHT_MOTOR_PORT = 1;
-
-        public static final int[] LEFT_ENCODER_PORTS = new int[] { 4, 5 };
-        public static final int[] RIGHT_ENCODER_PORTS = new int[] { 6, 7 };
-        public static final boolean LEFT_ENCODER_REVERSED = true;
-        public static final boolean RIGHT_ENCODER_REVERSED = false;
-
-        public static final int ENCODER_CPR = 140;
-        public static final double WHEEL_DIAMETER_METERS = 0.09;
-        public static final double GEAR_RATIO = 72.0 / 90.0;
-        public static final double ENCODER_DISTANCE_PER_PULSE = (WHEEL_DIAMETER_METERS * Math.PI)
-                / ((double) ENCODER_CPR) * GEAR_RATIO;
-
-        public static final double P = -0.003;
+        public static final int leftMotorPort = 0;
+        public static final int rightMotorPort = 1;
+        public static final int leftEncoderA = 4;
+        public static final int leftEncoderB = 5;
+        public static final int rightEncoderA = 6;
+        public static final int rightEncoderB = 7;
+        public static final double wheelDiameter = 2.83;
+        public static final double pulsesPerRev = 1440;
+        public static final double inchesPerPulse = Math.PI * wheelDiameter / pulsesPerRev;
+        public static final double wheelTrack = 5.25; // 5.86;
+        public static final double inchesPerDegree = Math.PI * wheelDiameter / 360;
 
     }
 }

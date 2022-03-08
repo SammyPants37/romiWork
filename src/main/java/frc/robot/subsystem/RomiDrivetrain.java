@@ -17,15 +17,15 @@ public class RomiDrivetrain extends SubsystemBase{
 
   // The Romi has the left and right motors set to
   // PWM channels 0 and 1 respectively
-  private final static PWMTalonSRX m_leftMotor = new PWMTalonSRX(Constants.DriveConstants.LEFT_MOTOR_PORT);
-  private final static PWMTalonSRX m_rightMotor = new PWMTalonSRX(Constants.DriveConstants.RIGHT_MOTOR_PORT);
+  private final static PWMTalonSRX m_leftMotor = new PWMTalonSRX(Constants.DriveConstants.leftMotorPort);
+  private final static PWMTalonSRX m_rightMotor = new PWMTalonSRX(Constants.DriveConstants.rightMotorPort);
 
   // The Romi has onboard encoders that are hardcoded
   // to use DIO pins 4/5 and 6/7 for the left and right
-  private final static Encoder m_leftEncoder = new Encoder(Constants.DriveConstants.LEFT_ENCODER_PORTS[0],
-  Constants.DriveConstants.LEFT_ENCODER_PORTS[1]);
-  private final static Encoder m_rightEncoder = new Encoder(Constants.DriveConstants.RIGHT_ENCODER_PORTS[0],
-  Constants.DriveConstants.RIGHT_ENCODER_PORTS[1]);
+  private final static Encoder m_leftEncoder = new Encoder(Constants.DriveConstants.leftEncoderA,
+  Constants.DriveConstants.leftEncoderB);
+  private final static Encoder m_rightEncoder = new Encoder(Constants.DriveConstants.rightEncoderA,
+  Constants.DriveConstants.rightEncoderB);
 
   // Set up the differential drive controller
   private final static DifferentialDrive m_diffDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
