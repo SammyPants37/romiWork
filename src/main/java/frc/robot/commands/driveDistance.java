@@ -1,18 +1,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.sensors.RomiGyro;
 import frc.robot.subsystem.RomiDrivetrain;
 
 public class driveDistance extends CommandBase{
     private double distance;
-    private RomiGyro gyro;
-    private RomiDrivetrain drive = new RomiDrivetrain(gyro);
+    private RomiDrivetrain drive;
 
-    public driveDistance(double theDistance, RomiGyro theGyro) {
+    public driveDistance(double theDistance, RomiDrivetrain drivetrain) {
+        drive = drivetrain;
         distance = theDistance;
-        gyro = theGyro;
         drive.resetEncoders();
+        addRequirements(drive);
 
     }
 

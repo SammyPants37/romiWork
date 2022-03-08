@@ -7,9 +7,10 @@ package frc.robot.subsystem;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.sensors.RomiGyro;
 
-public class RomiDrivetrain {
+public class RomiDrivetrain extends SubsystemBase{
   // private static final double kCountsPerRevolution = 1440.0;
   // private static final double kWheelDiameterInch = 2.75591; // 70 mm
 
@@ -28,7 +29,7 @@ public class RomiDrivetrain {
 
   int P, I, D = 1;
   int integral, previous_error, setpoint = 0;
-  RomiGyro gyro;
+  public RomiGyro gyro;
   // DifferentialDrive robotDrive;
   double error;
   double derivative;

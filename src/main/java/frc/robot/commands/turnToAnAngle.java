@@ -1,22 +1,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.sensors.RomiGyro;
 import frc.robot.subsystem.RomiDrivetrain;
 
 public class turnToAnAngle extends CommandBase{
     
     private double angle;
-    private RomiGyro gyro;
-    private RomiDrivetrain drive = new RomiDrivetrain(gyro);
+    private RomiDrivetrain drive;
     private boolean turnLeft = false;
 
-    public turnToAnAngle(double turnAngle, RomiGyro theGyro) {
+    public turnToAnAngle(double turnAngle, RomiDrivetrain drivetrain) {
         angle = turnAngle;
-        gyro = theGyro;
-        if (angle > gyro.getAngleZ()) {
+        drive = drivetrain;
+        if (angle > drive.gyro.getAngleZ()) {
             turnLeft = true;
         }
+        addRequirements(drive);
     }
 
     public void execute() {
@@ -29,7 +28,7 @@ public class turnToAnAngle extends CommandBase{
     }
 
     public boolean isFinished() {
-        return gyro.getAngleZ() >= angle;
+        return drive.gyro.getAngleZ() >= angle;
     }
 
     public void end(boolean interrupted) {

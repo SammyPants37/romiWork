@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
 
   // private static boolean GyroInverted = false;
   
-  private Command aton = new aton(gyro, 15.0, 180.0);
+  private Command aton = new aton(driveTrain, 15.0, 180.0);
   // private Command m_autonomousCommand;
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
     // timer.reset();
     // timer.start();
     // atonSub.startTimer();
-    // aton.schedule();
+    aton.schedule();
   }
 
   /** This function is called periodically during autonomous. */
@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
     //   timer.reset();
     //   stage += 1;
     // }
-    aton.execute();
+    // aton.execute();
   }
   
 
