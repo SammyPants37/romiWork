@@ -21,6 +21,7 @@ public class driveDistance extends CommandBase{
     }
 
     public boolean isFinished() {
+        System.out.println("all done");
         return drive.getLeftDistanceInch() >= distance;
     }
 

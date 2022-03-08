@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.aton;
-import frc.robot.sensors.RomiGyro;
 // import edu.wpi.first.wpilibj2.command.CommandScheduler;
 // import frc.robot.commands.aton;
 import frc.robot.subsystem.RomiDrivetrain;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 // import frc.robot.subsystem.atonSub;
 
 /**
@@ -25,7 +25,7 @@ import frc.robot.subsystem.RomiDrivetrain;
 public class Robot extends TimedRobot {
   // SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final XboxController controller = new XboxController(0);
-  private RomiGyro gyro = new RomiGyro();
+  private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
   private RomiDrivetrain driveTrain = new RomiDrivetrain(gyro);
 
   // private final Timer timer = new Timer();
@@ -79,6 +79,7 @@ public class Robot extends TimedRobot {
     // timer.reset();
     // timer.start();
     // atonSub.startTimer();
+    System.out.println("starting");
     aton.schedule();
   }
 

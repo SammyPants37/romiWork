@@ -12,7 +12,7 @@ public class turnToAnAngle extends CommandBase{
     public turnToAnAngle(double turnAngle, RomiDrivetrain drivetrain) {
         angle = turnAngle;
         drive = drivetrain;
-        if (angle > drive.gyro.getAngleZ()) {
+        if (angle > drive.gyro.getAngle()) {
             turnLeft = true;
         }
         addRequirements(drive);
@@ -28,7 +28,8 @@ public class turnToAnAngle extends CommandBase{
     }
 
     public boolean isFinished() {
-        return drive.gyro.getAngleZ() >= angle;
+        System.out.println("all done");
+        return drive.gyro.getAngle() >= angle;
     }
 
     public void end(boolean interrupted) {
