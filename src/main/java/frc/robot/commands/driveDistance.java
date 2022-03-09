@@ -10,22 +10,31 @@ public class driveDistance extends CommandBase{
     public driveDistance(double theDistance, RomiDrivetrain drivetrain) {
         drive = drivetrain;
         distance = theDistance;
-        drive.resetEncoders();
-        addRequirements(drive);
+        // drive.resetEncoders();
+        // addRequirements(drive);
 
     }
 
+    
+//     public void initialize() {
+//         System.out.println("initializing!");
+//         // drive.arcadeDrive(0, 0);
+//   }
+
+    
     public void execute() {
         System.out.println("driving!");
-        drive.arcadeDrive(0.7, 0.0);
+        // drive.arcadeDrive(0.7, 0.0);
     }
 
     public boolean isFinished() {
         System.out.println("all done");
-        return drive.getLeftDistanceInch() >= distance;
+        return true;
+        // return drive.getLeftDistanceInch() >= distance;
     }
 
     public void end(boolean interrupted) {
-        drive.arcadeDrive(0, 0);
+        System.out.println("the end of the command");
+        // drive.arcadeDrive(0, 0);
       }
 }

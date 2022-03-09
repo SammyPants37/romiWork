@@ -36,7 +36,7 @@ public class RomiDrivetrain extends SubsystemBase{
   public ADXRS450_Gyro gyro;
   double error;
   double derivative;
-  double rcw;
+  double rcw = 0;
 
 
   public RomiDrivetrain(ADXRS450_Gyro gyro){

@@ -5,16 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-// import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.aton;
-// import edu.wpi.first.wpilibj2.command.CommandScheduler;
-// import frc.robot.commands.aton;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystem.RomiDrivetrain;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-// import frc.robot.subsystem.atonSub;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -26,7 +22,7 @@ public class Robot extends TimedRobot {
   // SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final XboxController controller = new XboxController(0);
   private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-  private RomiDrivetrain driveTrain = new RomiDrivetrain(gyro);
+  private RomiDrivetrain driveTrain;
 
   // private final Timer timer = new Timer();
   // private int stage = 1;
@@ -35,7 +31,8 @@ public class Robot extends TimedRobot {
 
   // private static boolean GyroInverted = false;
   
-  private Command aton = new aton(driveTrain, 15.0, 180.0);
+  private Command autonomous = new aton(driveTrain, 15.0, 180.0);
+  public Command m_autonomousCommand;
   // private Command m_autonomousCommand;
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -46,6 +43,7 @@ public class Robot extends TimedRobot {
     // m_chooser.setDefaultOption("Simple Auto", aton);  
     // m_chooser.addOption("Complex Auto", aton);
     // m_autonomousCommand = m_chooser.getSelected();
+    driveTrain = new RomiDrivetrain(gyro);
   }
 
   /**
@@ -57,7 +55,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    // CommandScheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
     
   }
 
@@ -74,13 +72,20 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     
+    m_autonomousCommand = autonomous;
+
+    // schedule the autonomous command (example)
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
+
     driveTrain.resetEncoders();
     // stage = 1;
     // timer.reset();
     // timer.start();
     // atonSub.startTimer();
     System.out.println("starting");
-    aton.schedule();
+    // aton.schedule();
   }
 
   /** This function is called periodically during autonomous. */
@@ -105,9 +110,9 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.cancel();
-    // }
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
   }
 
   /** This function is called periodically during operator control. */

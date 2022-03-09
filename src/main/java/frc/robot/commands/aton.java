@@ -7,9 +7,9 @@ public class aton extends SequentialCommandGroup {
     
 
     public aton(RomiDrivetrain drivetrain, double distance, double angle) {
-      addCommands(new driveDistance(distance, drivetrain),
-                  new turnToAnAngle(angle, drivetrain),
-                  new driveDistance(distance, drivetrain));
-      addRequirements(drivetrain);
+      System.out.println("this is a print statement");
+      addCommands(new driveDistance(distance, drivetrain));
+                  // new turnToAnAngle(angle, drivetrain),
+                  // new driveDistance(distance, drivetrain));
     }
 }
